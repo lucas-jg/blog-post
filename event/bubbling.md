@@ -85,3 +85,43 @@ function logEvent(event) {
 > 이벤트 버블링에 대한 지식이 없는 상태에서 코딩을 하다보면 생각지도 못한 이벤트가 발생하는 버그를 발견할 수 있겠죠.
 > 이벤트 버블링에 대해 잘 이해하고 사용한다면 문제가 없겠지만 급한 프로젝트나 버블링에 대해 생각하지 못하고 구조를 잡은
 > 프로젝트의 경우 event.stopPropagation();를 사용하여 이벤트 버블링을 막는 방법이 있습니다.
+
+## 이벤트 캡처?
+> 위에서 알아본 이벤트 버블링의 정반대 개념이라고 이해하면 쉽게 이해할 수 있습니다.
+> 바로 예제를 통해서 어떻게 동작하는지 알아보도록 하겠습니다.
+
+### 이벤트 캡처 구현 방법
+addEventListener()의 세번째인자에 true를 넣으면 적용되며, 기본값은 false입니다.
+3번째 인자를 넣지 않는 경우 자동으로 이벤트 버블링 방식의 전파가 이루어집니다.
+
+### 이벤트 캡처 예제
+동작하는 코드는 아래 Codesandbox에서 확인해보세요.
+[JS - Event Capturing Code](https://j33v4l7kx9.codesandbox.io/) 
+
+### HTML
+ ```html
+<div class="b-one">
+    b-one
+	<div class="b-two">
+        b-two
+	    <div class="b-three">
+            b-three
+	    </div>
+    </div>
+</div>
+ ```
+### Javascript Add event
+```javascript
+var divs = document.querySelectorAll("div");
+divs.forEach(function(div) {
+  div.addEventListener("click", logEvent, true); // 변경된 부분 addEventListener 세번째 인자에 true를 넣음
+});
+
+function logEvent(event) {
+  alert(event.currentTarget.className);
+}
+```
+
+이번 포스트에서는 자바스크립트의 이벤트 전파방식인 버블링과 캡처링에 대해 알아보았습니다.
+이벤트 전파에 대해 모르고 개발하다보면 생각지도 못한곳에서 이벤트가 발생하는 버그를 볼 수 있을꺼에요.
+그런 일이 있기전에 제 포스트를 보고 조금의 시간이라도 벌었으면 좋겠네요.
